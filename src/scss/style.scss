@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;700&display=swap');
+// @import "fonts";
+@import "reset";
+
+@import './section/header.scss';
+@import './section/breadcrumb.scss';
+
+
+
+@import './page/topics.scss';
+
+
+.home-page {
+  min-height: 80vh;
+  padding: 40px 0;
+  font-size: 22px;
+}
+
+.preloader {
+  // display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  transition: all 0.3s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader--hide {
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+}
+
+:root {
+  --hue: 18;
+  --bg: hsl(var(--hue), 90%, 90%);
+  --fg: hsl(var(--hue), 90%, 10%);
+  --primary: hsl(var(--hue), 90%, 50%);
+  --trans-dur: 0.3s;
+  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (2560 - 320));
+}
+
+.pl {
+  $dur: 2s;
+  margin: auto;
+  width: 8em;
+  height: 8em;
+  &__line,
+  &__line-g,
+  &__lines {
+    animation: lineRotate $dur ease-in-out infinite;
+  }
+  &__line {
+    animation-name: lineMove;
+    animation-timing-function: ease-in;
+  }
+  &__line-g {
+    animation-name: lineFade;
+    animation-timing-function: linear;
+  }
+  @for $l from 2 through 12 {
+    &__line-g:nth-child(#{$l}),
+    &__line-g:nth-child(#{$l}) &__line {
+      animation-delay: calc(($dur / 2) / 12 * $l);
+    }
+  }
+  &__lines {
+    transform-origin: 64px 64px;
+  }
+  &__layer &__lines {
+    stroke: #333;
+  }
+  &__layer + &__layer &__lines {
+    stroke: #323232;
+  }
+} /* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: hsl(var(--hue), 90%, 10%);
+    --fg: hsl(var(--hue), 90%, 90%);
+  }
+}
+
+/* Animations */
+@keyframes lineRotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(0.5turn);
+  }
+}
+
+@keyframes lineFade {
+  from,
+  50%,
+  to {
+    opacity: 0;
+  }
+  10%,
+  45% {
+    opacity: 1;
+  }
+}
+
+@keyframes lineMove {
+  from {
+    stroke-dashoffset: -32;
+  }
+  50%,
+  to {
+    stroke-dashoffset: 32;
+  }
+}
